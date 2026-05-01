@@ -1,12 +1,11 @@
 ---
 deployment:
   tasks:
-    - export COMPOSER_ALLOW_SUPERUSER=1
-    - if command -v composer >/dev/null 2>&1; then composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction; elif [ -x /opt/cpanel/composer/bin/composer ]; then /opt/cpanel/composer/bin/composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction; else echo "Composer was not found on this cPanel account" && exit 1; fi
-    - php artisan down || true
-    - php artisan migrate --force
-    - php artisan storage:link || true
-    - php artisan config:cache
-    - php artisan route:cache
-    - php artisan view:cache
-    - php artisan up
+    - export DEPLOYPATH=/home/perakkin/staging.perakkini.com
+    - cd $DEPLOYPATH
+    - /opt/cpanel/composer/bin/composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
+    - /usr/local/bin/php artisan migrate --force
+    - /usr/local/bin/php artisan storage:link
+    - /usr/local/bin/php artisan config:cache
+    - /usr/local/bin/php artisan route:cache
+    - /usr/local/bin/php artisan view:cache
